@@ -76,8 +76,8 @@ class KubernetesJobTask(luigi.Task):
             raise ValueError("Illegal auth_method")
         self.job_uuid = str(uuid.uuid4().hex)
         self.uu_name = self.name + "-luigi-" + self.job_uuid
-        if ("restartPolicy" not in self.spec_schema):
-            self.spec_schema["restartPolicy"] = "Never"
+        if ("restartPolicy" not in self.spec_schema()):
+            self.spec_schema()["restartPolicy"] = "Never"
 
     @property
     def auth_method(self):
@@ -224,7 +224,7 @@ class KubernetesJobTask(luigi.Task):
                     "metadata": {
                         "name": self.uu_name
                     },
-                    "spec": self.spec_schema
+                    "spec": self.spec_schema()
                 }
             }
         }
