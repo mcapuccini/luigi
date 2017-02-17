@@ -48,25 +48,27 @@ except ImportError:
 
 class SuccessJob(KubernetesJobTask):
     name = "success"
-    spec_schema = {
-        "containers": [{
-            "name": "hello",
-            "image": "alpine:3.4",
-            "command": ["echo",  "Hello World!"]
-        }]
-    }
+    def spec_schema(self):
+        return {
+            "containers": [{
+                "name": "hello",
+                "image": "alpine:3.4",
+                "command": ["echo",  "Hello World!"]
+            }]
+        }
 
 
 class FailJob(KubernetesJobTask):
     name = "fail"
     max_retrials = 3
-    spec_schema = {
-        "containers": [{
-            "name": "fail",
-            "image": "alpine:3.4",
-            "command": ["You",  "Shall", "Not", "Pass"]
-        }]
-    }
+    def spec_schema(self):
+        return {
+            "containers": [{
+                "name": "fail",
+                "image": "alpine:3.4",
+                "command": ["You",  "Shall", "Not", "Pass"]
+            }]
+        }
 
 
 class TestK8STask(unittest.TestCase):
